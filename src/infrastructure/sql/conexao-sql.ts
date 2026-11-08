@@ -12,7 +12,10 @@ export async function conectarSql(): Promise<DataSource> {
     port: 1433,
     entities: [ReservaEntity],
     synchronize: true, // cria/ajusta a tabela sozinho (simples para o projeto da disciplina)
-    options: { encrypt: true }, // o Azure SQL exige conexão criptografada
+    options: {
+      encrypt: true, // o Azure SQL exige conexão criptografada
+      useUTC: true, // grava e lê as datas em UTC (sem isso, o horário muda conforme o fuso da máquina)
+    },
     connectionTimeout: 60000, // o banco gratuito pode estar "dormindo" e demorar para acordar
   });
   await conexao.initialize();
